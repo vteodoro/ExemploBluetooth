@@ -1,6 +1,8 @@
 package br.senai.sp.informatica.mobile.bluetest;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,7 +13,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaPareados extends BlueActivity implements AdapterView.OnItemClickListener {
+public class ListaPareados extends Activity implements AdapterView.OnItemClickListener {
+
+    BlueActivity blueActivity = new BlueActivity();
 
     protected List<BluetoothDevice> lista;
     private ListView listView;
@@ -24,8 +28,8 @@ public class ListaPareados extends BlueActivity implements AdapterView.OnItemCli
 
     protected void onResume(){
         super.onResume();
-        if(bluetoothAdapter != null){
-            lista = new ArrayList<BluetoothDevice>(bluetoothAdapter.getBondedDevices());
+        if(blueActivity.bluetoothAdapter != null){
+            lista = new ArrayList<BluetoothDevice>(blueActivity.bluetoothAdapter.getBondedDevices());
             updateLista();
         }
     }

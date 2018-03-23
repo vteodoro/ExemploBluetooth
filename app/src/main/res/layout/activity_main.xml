@@ -5,17 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:transitionGroup="true"
-    tools:context=".BlueActivity">
+    tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btnOnOff"
+        android:id="@+id/btLigar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="setbtnOnOff"
-        android:text="on"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Ligar Blue"
+        android:onClick="ligar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnListar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Listar par"
+        android:onClick="listar"
+        app:layout_constraintEnd_toEndOf="@+id/btLigar"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="@+id/btLigar"
+        app:layout_constraintTop_toBottomOf="@+id/btLigar" />
+
+    <Button
+        android:id="@+id/btnBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Buscar dev"
+        android:onClick="buscar"
+        app:layout_constraintEnd_toEndOf="@+id/btLigar"
+        app:layout_constraintStart_toStartOf="@+id/btLigar"
+        app:layout_constraintTop_toBottomOf="@+id/btnListar" />
 </android.support.constraint.ConstraintLayout>

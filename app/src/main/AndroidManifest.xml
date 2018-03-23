@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".BlueActivity"/>
+        <activity android:name=".ListaPareados"/>
+        <activity android:name=".BuscarDevices"/>
     </application>
 
 </manifest>
