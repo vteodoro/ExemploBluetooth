@@ -1,35 +1,32 @@
 package br.senai.sp.informatica.mobile.bluetest;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaPareados extends Activity implements AdapterView.OnItemClickListener {
+public class ListaPareados extends BlueActivity implements AdapterView.OnItemClickListener {
 
-    BlueActivity blueActivity = new BlueActivity();
-
-    protected List<BluetoothDevice> lista;
+    public List<BluetoothDevice> lista;
     private ListView listView;
 
+    @Override
     public void onCreate(Bundle bundle){
         super.onCreate(bundle);
         setContentView(R.layout.pesquisar_devices);
         listView = (ListView) findViewById(R.id.blueList);
     }
 
+    @Override
     protected void onResume(){
         super.onResume();
-        if(blueActivity.bluetoothAdapter != null){
-            lista = new ArrayList<BluetoothDevice>(blueActivity.bluetoothAdapter.getBondedDevices());
+        if(bluetoothAdapter != null){
+            lista = new ArrayList<BluetoothDevice>(bluetoothAdapter.getBondedDevices());
             updateLista();
         }
     }
@@ -44,7 +41,7 @@ public class ListaPareados extends Activity implements AdapterView.OnItemClickLi
         int layout = android.R.layout.simple_list_item_1;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, layout, nomes);
         listView.setAdapter(adapter);
-        listView.setOnClickListener((View.OnClickListener) this);
+        listView.setOnItemClickListener((AdapterView.OnItemClickListener) this);
     }
 
     @Override

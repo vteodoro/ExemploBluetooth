@@ -2,19 +2,26 @@ package br.senai.sp.informatica.mobile.bluetest;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlueActivity extends Activity {
 
     public BluetoothAdapter bluetoothAdapter;
 
+    public BlueActivity() {
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (bluetoothAdapter == null) {
             Toast.makeText(this, "Bluetooth não disponível neste aparelho", Toast.LENGTH_SHORT).show();
@@ -31,6 +38,8 @@ public class BlueActivity extends Activity {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, 0);
         }
+
+        finish();
     }
 
     @Override

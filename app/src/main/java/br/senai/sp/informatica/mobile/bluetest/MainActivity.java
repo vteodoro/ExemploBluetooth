@@ -1,27 +1,49 @@
 package br.senai.sp.informatica.mobile.bluetest;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.QuickContactBadge;
 
 public class MainActivity extends AppCompatActivity {
+    private Button btBuscar;
+    private Button btLigar;
+    private Button btListar;
+    private final Context ctx = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-    public void ligar(View view){
-        startActivity(new Intent(this, BlueActivity.class));
-    }
+        btListar = (Button) findViewById(R.id.btListar);
+        btListar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ctx, ListaPareados.class);
+                startActivity(i);
+            }
+        });
 
-    public void listar(View view){
-        startActivity(new Intent(this, ListaPareados.class));
-    }
+        btBuscar = (Button) findViewById(R.id.btBuscar);
+        btBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ctx, BuscarDevices.class);
+                startActivity(i);
+            }
+        });
 
-    public void buscar(View view){
-        startActivity(new Intent(this, BuscarDevices.class));
+        btLigar = (Button) findViewById(R.id.btLigar);
+        btLigar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ctx, BlueActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }
