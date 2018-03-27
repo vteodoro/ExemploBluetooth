@@ -74,6 +74,7 @@ public class BuscarDevices extends Activity implements AdapterView.OnItemClickLi
         for(BluetoothDevice device : lista){
             boolean pareado = device.getBondState() == BluetoothDevice.BOND_BONDED;
             nomes.add(device.getName() + " - " + device.getAddress() + (pareado ? " *pareado" : ""));
+
         }
 
         int layout = android.R.layout.simple_list_item_1;
