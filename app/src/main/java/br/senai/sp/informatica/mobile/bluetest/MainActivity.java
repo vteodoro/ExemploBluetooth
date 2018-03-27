@@ -19,15 +19,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btListar = (Button) findViewById(R.id.btListar);
-        btListar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ctx, ListaPareados.class);
-                startActivity(i);
-            }
-        });
-
         btBuscar = (Button) findViewById(R.id.btBuscar);
         btBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
