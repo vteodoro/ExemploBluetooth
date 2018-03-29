@@ -1,5 +1,6 @@
 package br.senai.sp.informatica.mobile.bluetest;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -9,6 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,8 +21,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class BuscarDevices extends Activity implements AdapterView.OnItemClickListener{
+    private static final int PERMISSION_LOCATION = 1;
     BlueActivity blueActivity = new BlueActivity();
     private List<BluetoothDevice> lista = new ArrayList<>();
     private ListView listView;
@@ -28,21 +36,45 @@ public class BuscarDevices extends Activity implements AdapterView.OnItemClickLi
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pesquisar_devices);
-        listView = (ListView) findViewById(R.id.blueList);
+        listView = findViewById(R.id.blueList);
 
 
         this.registerReceiver(mReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED));
         this.registerReceiver(mReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
         this.registerReceiver(mReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
 
-        buscar();
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PERMISSION_LOCATION);
+        } else {
+            buscar();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode) {
+            case PERMISSION_LOCATION:
+                if(grantResults.length > 0 && grantResults[0] == PERMISSION_GRANTED) {
+                    buscar();
+                } else {
+                    Toast.makeText(this, "Permissão negada", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                return;
+        }
     }
 
     public void buscar(){
         if(blueActivity.bluetoothAdapter.isDiscovering()){
             blueActivity.bluetoothAdapter.cancelDiscovery();
         }
-
+        
+        lista.clear();
+        //listar também dispositivos conhecidos
+        final Set<BluetoothDevice> conhecidos = blueActivity.bluetoothAdapter.getBondedDevices();
+        lista.addAll(conhecidos);
         blueActivity.bluetoothAdapter.startDiscovery();
         dialog = ProgressDialog.show(this, "BlueEx", "Buscando devices...", false, true);
     }
